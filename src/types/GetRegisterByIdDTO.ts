@@ -1,6 +1,5 @@
 export type GetRegisterByIdDTO = {
-  acknowledged: boolean
-  insertedId: string
+  _id: string
   title: string
   description: string
   beginAt: string

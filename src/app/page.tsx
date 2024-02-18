@@ -9,7 +9,7 @@ export default function Home() {
     <div className="h-screen w-screen">
       <Header />
       <main className="flex h-[calc(100%-64px)] w-full items-center justify-center bg-hoki-100 transition-colors dark:bg-cobalt-700">
-        <section className="relative h-full w-3/5 py-8">
+        <section className="relative h-full w-full py-8 lg:w-3/5">
           <List />
           <div className="absolute bottom-4 left-2 flex flex-col gap-2">
             <Button
@@ -22,7 +22,7 @@ export default function Home() {
             <AddModal day={new Date()} />
           </div>
         </section>
-        <section className="h-full w-2/5 bg-hoki-700 dark:bg-hoki-900"></section>
+        <section className="hidden h-full w-0 bg-hoki-700 dark:bg-hoki-900 lg:block lg:w-2/5"></section>
       </main>
     </div>
   )

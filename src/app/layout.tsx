@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Poppins, Roboto } from 'next/font/google'
 import './globals.css'
 import ReactQueryProvider from '@/lib/provider/reactQuery'
+import { Toaster } from 'sonner'
 
 const poppins = Poppins({
   weight: ['400', '500', '600', '700'],
@@ -28,6 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.variable} ${roboto.variable}`}>
         <ReactQueryProvider>{children}</ReactQueryProvider>
+        <Toaster />
       </body>
     </html>
   )

@@ -4,31 +4,34 @@ import { z } from 'zod'
 
 const Input = z.object({
   title: z.string(),
-  description: z.string(),
+  description: z.string().optional(),
   beginAt: z.string(),
-  endAt: z.string(),
-  tags: z.array(z.string()),
-  link: z.string(),
+  endAt: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+  link: z.string().optional(),
 })
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   const client = await clientPromise
   const db = client.db('day-by-day')
   await client.connect()
   try {
-    const data = await request.json()
+    const data = await req.json()
     const body = Input.parse(data)
     const insertData = {
       ...body,
-      beginAt: new Date(body.beginAt).toISOString(),
-      endAt: new Date(body.endAt).toISOString(),
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      beginAt: new Date(body.beginAt),
+      endAt: body.endAt ? new Date(body.endAt) : undefined,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     }
     const register = await db.collection('registers').insertOne({
       ...insertData,
     })
-    return NextResponse.json({ ...register, ...insertData }, { status: 201 })
+    return NextResponse.json(
+      { _id: register.insertedId, ...insertData },
+      { status: 201 },
+    )
   } catch (err: unknown) {
     const error = err as Error
     return NextResponse.json(

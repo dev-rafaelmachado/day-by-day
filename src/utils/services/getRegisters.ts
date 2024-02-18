@@ -13,7 +13,6 @@ const asyncGetRegisters = async ({ date }: Params) => {
         params: { date },
       },
     )
-    console.log(response.data)
     return response.data
   } catch (err: unknown) {
     const error = err as Error

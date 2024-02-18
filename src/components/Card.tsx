@@ -9,6 +9,7 @@ type Props = {
   endAt?: string
   tags?: string[]
   link?: string
+  remove: () => void
 }
 
 export const Card = ({
@@ -18,6 +19,7 @@ export const Card = ({
   endAt,
   tags,
   link,
+  remove,
 }: Props) => {
   return (
     <div className="relative flex w-4/5 flex-col gap-2 rounded-lg bg-cobalt-800 px-6 py-4 text-cobalt-200 dark:bg-hoki-100 dark:text-cobalt-900">
@@ -39,7 +41,7 @@ export const Card = ({
       <h1 className="font-body text-2xl font-semibold">{title}</h1>
       <p>{description}</p>
       <div className="absolute bottom-4 right-6 flex flex-row-reverse gap-2">
-        <button>
+        <button onClick={remove}>
           <Trash size={'1.2rem'} />
         </button>
         <button>

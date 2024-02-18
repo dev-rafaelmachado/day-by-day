@@ -22,12 +22,18 @@ export async function GET(req: NextRequest) {
     const startOfDay = new Date(
       dateObj.getFullYear(),
       dateObj.getMonth(),
-      dateObj.getDate(),
+      dateObj.getDate() + 0,
+      0,
+      0,
+      0,
     )
     const endOfDay = new Date(
       dateObj.getFullYear(),
       dateObj.getMonth(),
       dateObj.getDate() + 1,
+      0,
+      0,
+      0,
     )
 
     const register = await db
@@ -40,7 +46,7 @@ export async function GET(req: NextRequest) {
       })
       .toArray()
 
-    return NextResponse.json({ register }, { status: 200 })
+    return NextResponse.json(register, { status: 200 })
   } catch (err: unknown) {
     const error = err as Error
     return NextResponse.json(

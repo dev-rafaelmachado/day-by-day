@@ -23,6 +23,8 @@ import {
   FormMessage,
 } from './ui/form'
 import { Input } from './ui/input'
+import { useCreateRegister } from '@/hooks/querys/useCreateRegister'
+import { useState } from 'react'
 
 const schema = z.object({
   title: z.string({
@@ -42,6 +44,8 @@ type Props = {
 }
 
 export const AddModal = ({ day }: Props) => {
+  const [open, setOpen] = useState(false)
+  const { addRegister, isPending } = useCreateRegister()
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   })
@@ -54,17 +58,26 @@ export const AddModal = ({ day }: Props) => {
     const endAt = data.endAt
       ? new Date(`${day.toISOString().split('T')[0]}T${data.endAt}`)
       : undefined
-    console.log({
-      ...data,
-      beginAt,
-      endAt,
-      tags,
-    })
+
+    addRegister(
+      {
+        ...data,
+        beginAt,
+        endAt,
+        tags,
+      },
+      {
+        onSuccess: () => {
+          form.reset()
+          setOpen(false)
+        },
+      },
+    )
   }
   return (
     <div>
-      <Dialog>
-        <DialogTrigger>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
           <Button
             variant={'ghost'}
             size="icon"
@@ -165,7 +178,24 @@ export const AddModal = ({ day }: Props) => {
                   )}
                 />
                 <div className="flex gap-2">
-                  <Button type="submit">Salvar</Button>
+                  <Button
+                    className="flex w-16 items-center justify-center"
+                    type="submit"
+                    disabled={isPending}
+                  >
+                    {isPending ? (
+                      <div
+                        className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                        role="status"
+                      >
+                        <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                          Loading...
+                        </span>
+                      </div>
+                    ) : (
+                      'Salvar'
+                    )}
+                  </Button>
                   <DialogClose asChild>
                     <Button variant="ghost">Cancelar</Button>
                   </DialogClose>
