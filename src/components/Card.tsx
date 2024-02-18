@@ -20,16 +20,16 @@ export const Card = ({
   link,
 }: Props) => {
   return (
-    <div className="text-cobalt-200 dark:text-cobalt-900 bg-cobalt-800 relative flex w-4/5 flex-col gap-2 rounded-lg px-6 py-4 dark:bg-hoki-100">
+    <div className="relative flex w-4/5 flex-col gap-2 rounded-lg bg-cobalt-800 px-6 py-4 text-cobalt-200 dark:bg-hoki-100 dark:text-cobalt-900">
       <div className="flex w-full items-center justify-between">
-        <span className="dark:bg-cobalt-800 bg-cobalt-100 text-cobalt-950 rounded-md px-2 py-1 text-sm dark:text-hoki-100">
+        <span className="rounded-md bg-cobalt-100 px-2 py-1 text-sm text-cobalt-950 dark:bg-cobalt-800 dark:text-hoki-100">
           {periodTime(beginAt, endAt)}
         </span>
         <div className="flex gap-2">
           {tags?.map((tag) => (
             <span
               key={tag}
-              className="dark:bg-cobalt-800 bg-cobalt-100 text-cobalt-950 rounded-md px-2 py-1 text-xs dark:text-hoki-100"
+              className="rounded-md bg-cobalt-100 px-2 py-1 text-xs text-cobalt-950 dark:bg-cobalt-800 dark:text-hoki-100"
             >
               #{tag}
             </span>
