@@ -8,7 +8,7 @@ type Params = {
 
 export const useGetRegisters = ({ date }: Params) => {
   const queryKey = ['registers-by-date']
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch, isRefetching } = useQuery({
     queryKey,
     queryFn: async () => {
       const response = await asyncGetRegisters({
@@ -20,5 +20,5 @@ export const useGetRegisters = ({ date }: Params) => {
       return response
     },
   })
-  return { data, isLoading }
+  return { data, isLoading: isRefetching || isLoading, refetch }
 }

@@ -3,6 +3,7 @@ import { Poppins, Roboto } from 'next/font/google'
 import './globals.css'
 import ReactQueryProvider from '@/lib/provider/reactQuery'
 import { Toaster } from 'sonner'
+import { SelectedDayProvider } from '@/contexts/SelectedDayContext'
 
 const poppins = Poppins({
   weight: ['400', '500', '600', '700'],
@@ -28,7 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${roboto.variable}`}>
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <SelectedDayProvider>
+          <ReactQueryProvider>{children}</ReactQueryProvider>
+        </SelectedDayProvider>
         <Toaster />
       </body>
     </html>

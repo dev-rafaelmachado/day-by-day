@@ -1,65 +1,85 @@
 'use client'
-import { Plus } from '@phosphor-icons/react/dist/ssr'
-import { Button } from './ui/button'
+import { GetRegisterByIdDTO } from '@/types/GetRegisterByIdDTO'
 import {
   Dialog,
+  DialogHeader,
+  DialogTrigger,
+  DialogTitle,
+  DialogDescription,
   DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
+} from './ui/dialog'
 import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { Button } from './ui/button'
+
 import {
   Form,
-  FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
+  FormControl,
   FormMessage,
+  FormDescription,
 } from './ui/form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ReactNode, useEffect, useState } from 'react'
 import { Input } from './ui/input'
-import { useCreateRegister } from '@/hooks/querys/useCreateRegister'
-import { useState } from 'react'
+import { useEditRegister } from '@/hooks/querys/useEditRegister'
+import { getHourAndMinute } from '@/utils/formated/getHourAndMinute'
 import { Textarea } from './ui/textarea'
 import { useSelectedDay } from '@/contexts/SelectedDayContext'
 
 const schema = z.object({
-  title: z.string({
-    required_error: 'O título é obrigatório',
-  }),
+  title: z.string().optional(),
   description: z.string().optional(),
-  beginAt: z.string({
-    required_error: 'O horário de início é obrigatório',
-  }),
+  beginAt: z.string().optional(),
   endAt: z.string().optional(),
   tags: z.string().optional(),
   link: z.string().optional().optional(),
 })
 
-export const AddModal = () => {
+type Props = {
+  register: Omit<GetRegisterByIdDTO, 'createdAt' | 'updatedAt'>
+  children: ReactNode
+}
+
+export const EditModal = ({ register, children }: Props) => {
   const { selectedDay: day } = useSelectedDay()
   const [open, setOpen] = useState(false)
-  const { addRegister, isPending } = useCreateRegister()
+  const { isPending, editRegister } = useEditRegister()
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   })
 
+  useEffect(() => {
+    const beginHour = getHourAndMinute(register.beginAt)
+    const endHour = register.endAt
+      ? getHourAndMinute(register.endAt)
+      : undefined
+    form.reset({
+      title: register.title,
+      description: register.description,
+      beginAt: beginHour,
+      endAt: endHour,
+      tags: register.tags?.join('; '),
+      link: register.link,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [register])
+
   const onSubmit = (data: z.infer<typeof schema>) => {
     const tags = data.tags?.split(';').map((tag) => tag.trim())
     const beginAt = new Date(
-      `${day?.toISOString().split('T')[0]}T${data.beginAt}`,
+      `${day.toISOString().split('T')[0]}T${data.beginAt}`,
     )
     const endAt = data.endAt
-      ? new Date(`${day?.toISOString().split('T')[0]}T${data.endAt}`)
+      ? new Date(`${day.toISOString().split('T')[0]}T${data.endAt}`)
       : undefined
 
-    addRegister(
+    editRegister(
       {
+        id: register._id,
         ...data,
         beginAt,
         endAt,
@@ -76,20 +96,12 @@ export const AddModal = () => {
   return (
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button
-            variant={'ghost'}
-            size="icon"
-            className=" flex items-center justify-center p-2 text-cobalt-900 dark:text-white"
-          >
-            <Plus size={'1.6rem'} />
-          </Button>
-        </DialogTrigger>
+        <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="border-none dark:bg-cobalt-950 dark:text-white">
           <DialogHeader>
-            <DialogTitle>Adicionar uma nova atividade</DialogTitle>
+            <DialogTitle>Editar uma atividade</DialogTitle>
             <DialogDescription>
-              Preencha os campos abaixo para adicionar uma nova atividade
+              Altere os campos abaixo para editar uma atividade
             </DialogDescription>
             <Form {...form}>
               <form

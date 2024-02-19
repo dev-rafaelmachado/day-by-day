@@ -1,8 +1,10 @@
 import { periodTime } from '@/utils/formated/periodTIme'
 import { Pen, Trash } from '@phosphor-icons/react/dist/ssr'
 import { Link } from '@phosphor-icons/react/dist/ssr/Link'
+import { EditModal } from './EditModal'
 
 type Props = {
+  id: string
   title: string
   description?: string
   beginAt: string
@@ -13,6 +15,7 @@ type Props = {
 }
 
 export const Card = ({
+  id,
   title,
   description,
   beginAt,
@@ -44,9 +47,21 @@ export const Card = ({
         <button onClick={remove}>
           <Trash size={'1.2rem'} />
         </button>
-        <button>
-          <Pen size={'1.2rem'} />
-        </button>
+        <EditModal
+          register={{
+            _id: id,
+            title,
+            description,
+            beginAt,
+            endAt,
+            tags,
+            link,
+          }}
+        >
+          <button>
+            <Pen size={'1.2rem'} />
+          </button>
+        </EditModal>
         {link && (
           <a href={link}>
             <Link size={'1.2rem'} />
