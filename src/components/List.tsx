@@ -16,7 +16,7 @@ export const List = () => {
   }, [selectedDay, refetch])
 
   return (
-    <div className="flex h-full w-full flex-col items-center gap-4 overflow-y-auto pt-4">
+    <div className="flex h-full w-full flex-col items-center gap-4 overflow-y-auto pt-8">
       {isLoading && (
         <>
           {Array.from({ length: 5 }).map((_, i) => (

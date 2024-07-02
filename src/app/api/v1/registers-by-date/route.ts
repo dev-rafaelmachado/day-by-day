@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-import clientPromise from '../../../lib/mongodb'
+import clientPromise from '../../../../lib/mongodb'
 import { z } from 'zod'
 
 const Input = z.object({
