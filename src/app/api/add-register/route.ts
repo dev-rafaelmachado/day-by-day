@@ -13,9 +13,9 @@ const Input = z.object({
 
 export async function POST(req: NextRequest) {
   const client = await clientPromise
-  const db = client.db('day-by-day')
-  await client.connect()
   try {
+    const db = client.db('day-by-day')
+    await client.connect()
     const data = await req.json()
     const body = Input.parse(data)
 

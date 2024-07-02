@@ -19,20 +19,20 @@ Uma aplicação para manter o controle de suas atividades diárias, mantendo o c
 ## Requisitos
 
 - [Node.js](https://nodejs.org/en/)
-- [pnpm](https://pnpm.io/)
+- [yarn](https://yarnpkg.com/)
 
 ## Instalação
 
 ```bash
 $ git clone https://github.com/dev-rafaelmachado/day-by-day
 $ cd day-by-day
-$ pnpm install
+$ yarn
 ```
 
 ## Executando o projeto
 
 ```bash
-$ pnpm run dev
+$ yarn dev
 ```
 
 ## Variáveis de ambiente

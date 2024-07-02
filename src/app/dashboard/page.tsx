@@ -1,7 +1,7 @@
 import { AddModal } from '@/components/AddModal'
 import { Header } from '@/components/Header'
 import { PickDay } from '@/components/PickDay'
-import { List } from '@phosphor-icons/react'
+import { List } from '@/components/List'
 
 export default function Dashboard() {
   return (
