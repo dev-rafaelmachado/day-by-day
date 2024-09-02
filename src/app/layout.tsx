@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { Poppins, Roboto } from 'next/font/google'
-import './globals.css'
-import ReactQueryProvider from '@/lib/provider/reactQuery'
 import { Toaster } from 'sonner'
-import { SelectedDayProvider } from '@/contexts/SelectedDayContext'
+import { Header } from '@/components/Header'
+import { WrapperContext } from '@/components/utils/WrapperContext'
+import './globals.css'
 
 const poppins = Poppins({
   weight: ['400', '500', '600', '700'],
@@ -29,9 +29,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${roboto.variable}`}>
-        <SelectedDayProvider>
-          <ReactQueryProvider>{children}</ReactQueryProvider>
-        </SelectedDayProvider>
+        <div className="h-screen w-screen overflow-hidden">
+          <WrapperContext>
+            <Header />
+            {children}
+          </WrapperContext>
+        </div>
+
         <Toaster />
       </body>
     </html>

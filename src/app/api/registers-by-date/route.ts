@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import clientPromise from '../../../lib/mongodb'
 import { z } from 'zod'
+import getUser from '@/middleware/auth'
 
 const Input = z.object({
   date: z.string(),
@@ -17,6 +18,10 @@ export async function GET(req: NextRequest) {
       date: searchParams.get('date'),
     }
     const { date } = Input.parse(query)
+
+    const user = await getUser(req)
+
+    console.log('user', user)
 
     const dateObj = new Date(date)
     const startOfDay = new Date(
