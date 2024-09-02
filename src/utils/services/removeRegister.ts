@@ -6,7 +6,7 @@ type Params = {
 
 const asyncRemoveRegisters = async ({ id }: Params) => {
   try {
-    const response = await BaseApi.delete<{ id: string }>('/remove-register', {
+    const response = await BaseApi.delete<{ id: string }>('/v1/remove-register', {
       params: { id },
     })
     return response.data

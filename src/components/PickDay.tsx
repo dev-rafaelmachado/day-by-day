@@ -20,7 +20,7 @@ export const PickDay = () => {
       </PopoverTrigger>
       <PopoverContent className="ml-8 w-auto rounded-md border-none p-0">
         <Calendar
-          className="rounded-md border-none bg-cobalt-800"
+          className="rounded-md border-none bg-slate-200 dark:bg-cobalt-800"
           mode="single"
           selected={selectedDay}
           onDayClick={(day) => setSelectedDay(day)}

@@ -11,7 +11,7 @@ const asyncCreateRegister = async ({
   link,
 }: CreateRegisterDTO) => {
   try {
-    const response = await BaseApi.post<GetRegisterByIdDTO>('/add-register', {
+    const response = await BaseApi.post<GetRegisterByIdDTO>('/v1/add-register', {
       title,
       description,
       beginAt,

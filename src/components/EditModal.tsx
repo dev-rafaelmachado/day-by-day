@@ -96,7 +96,7 @@ export const EditModal = ({ register, children }: Props) => {
   return (
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogTrigger className='grid place-items-center' asChild>{children}</DialogTrigger>
         <DialogContent className="border-none dark:bg-cobalt-950 dark:text-white">
           <DialogHeader>
             <DialogTitle>Editar uma atividade</DialogTitle>

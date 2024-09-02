@@ -8,7 +8,7 @@ type Params = {
 const asyncGetRegisters = async ({ date }: Params) => {
   try {
     const response = await BaseApi.get<GetRegisterByIdDTO[]>(
-      '/registers-by-date',
+      '/v1/registers-by-date',
       {
         params: { date },
       },

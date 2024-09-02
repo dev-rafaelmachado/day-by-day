@@ -15,7 +15,7 @@ const asyncEditRegister = async ({
 }) => {
   try {
     const response = await BaseApi.put<GetRegisterByIdDTO>(
-      '/edit-register',
+      '/v1/edit-register',
       {
         title,
         description,
